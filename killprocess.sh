@@ -8,21 +8,21 @@
 # to change head and tail line-numbers
 #
 
-#process command name to check
-declare -a KILLLIST
-KILLLIST=("/usr/sbin/apache2" "/usr/bin/php5-cgi")
-#email (if empty no email will sent)
-EMAIL="noemail@nomail.com"
-#max cpu % load
-MAX_CPU=90
-#max execution time for CPU percentage > MAX_CPU (in seconds 7200s=2h)
-MAX_SEC=1800
-#max execution time for any %CPU (in seconds 2700s=45min)
-MAX_SEC2=2700
-#MAX_RAM in Kilobytes ex.: 250MB = 250*1024 = 256000 kb, 350MB=358400)
-MAX_RAM=358400
-#exclude root process (leave empty for match root process too)
-EXCLUDE_ROOT="grep -v root"
+# #process command name to check
+# declare -a KILLLIST
+KILLLIST=("${KILLLIST}")
+# #email (if empty no email will sent)
+EMAIL=${EMAIL}
+# #max cpu % load
+MAX_CPU=${MAX_CPU}
+# #max execution time for CPU percentage > MAX_CPU (in seconds 7200s=2h)
+MAX_SEC=${MAX_SEC}
+# #max execution time for any %CPU (in seconds 2700s=45min)
+MAX_SEC2=${MAX_SEC2}
+# #MAX_RAM in Kilobytes ex.: 250MB = 250*1024 = 256000 kb, 350MB=358400)
+MAX_RAM=${MAX_RAM}
+# #exclude root process (leave empty for match root process too)
+# EXCLUDE_ROOT="grep -v root"
 #colors
 RED=`tput setaf 1`
 GREEN=`tput setaf 2`
@@ -32,20 +32,7 @@ NC=`tput sgr0` # No Color
 #if you command (specially if executed in cron) truncate columns to 80 less chars
 #and your line is too long, set the right columns number here.
 #leave empty string "" for default columns environment.
-COLSNUM=""
-
-#
-# Load config file if exists
-#
-CONFIG_DIR=$( dirname "$(readlink -f "$0")" )
-CONFIG_FILE="$CONFIG_DIR/killprocess.config"
-
-if [[ -f $CONFIG_FILE ]]; then
-   echo "${YELLOW}Loading settings from $CONFIG_FILE. ${NC}"
-   source $CONFIG_FILE
-else
-   echo "${RED}Could not load settings from $CONFIG_FILE (file does not exist), kill process use default settings.${NC}"
-fi
+COLSNUM=${COLSNUM}
 
 #
 # PARSE ARGUMENTS
