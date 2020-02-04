@@ -7,9 +7,9 @@ RUN apt update && apt install -y cron htop vim dos2unix
 
 # install killprocess
 COPY killprocess.sh killprocess.sh
-RUN dos2unix killprocess.sh
-RUN chmod +x killprocess.sh
-RUN crontab -l | { cat; echo "* * * * * /opt/application/killprocess/killprocess.sh kill top cpu > /proc/1/fd/1 2>/proc/1/fd/2"; } | crontab -
+COPY start.sh start.sh
+RUN dos2unix start.sh && chmod +x start.sh
+RUN dos2unix killprocess.sh && chmod +x killprocess.sh
 
 ENV KILLLIST="default"
 ENV EMAIL=""
@@ -20,4 +20,4 @@ ENV MAX_RAM=524288
 ENV EXCLUDE_ROOT="grep -v root"
 ENV COLSNUM=""
 
-ENTRYPOINT ["cron", "-f"]
+ENTRYPOINT ["./start.sh"]
